@@ -1,43 +1,46 @@
-var cardOne = "queen";
-var cardTwo = "queen";
-var cardThree = "king";
-var cardFour = "king";
-
-/*
-if (cardOne === cardTwo) {
-	alert ("You found a match!")
-} else if (cardOne === cardThree) {
-	alert ("Sorry, try again.")
-} else if (cardOne === cardFour) {
-	alert ("Sorry, try again.")
-} else if (cardTwo === cardOne) {
-	alert ("You found a match!")
-} else if (cardTwo === cardThree) {
-	alert ("Sorry, try again.")
-} else if (cardTwo === cardFour) {
-	alert ("Sorry, try again.")
-} else if (cardThree === cardOne) {
-	alert ("Sorry, try again.")
-} else if (cardThree === cardTwo) {
-	alert ("Sorry, try again.")
-} else if (cardThree === cardFour) {
-	alert ("You found a match!")
-} else if (cardFour === cardOne) {
-	alert ("Sorry, try again.")
-} else if (cardFour === cardTwo) {
-	alert ("Sorry, try again.")
-} else if (cardFour === cardThree) {
-	alert ("You found a match!")
-}
-*/
-
 var gameBoard = document.getElementById ('game-board');
 
+var cards = ['king','king','queen','queen'];
+
+var cardsInPlay = [];
+
 var createBoard = function() {
-	for (var i = 0; i < 4; i++) {
-		var newCardElement = document.createElement ('div');
+	for (var i = 0; i < cards.length; i++) {
+		var newCardElement = document.createElement('div');
 			newCardElement.className = 'card';
-			gameBoard.appendChild (newCardElement);
+			gameBoard.appendChild(newCardElement);
 	}
 }
-createBoard ();
+
+createBoard();
+
+var cardElements = document.getElementsByClassName('card');
+
+for (var i=0; i<cards.length; i++) {
+	cardElements[i].setAttribute('data-card', cards[i]);
+}
+
+for (var i=0; i<cards.length; i++) {
+	cardElements[i].addEventListener('click', isTwoCards);
+}
+
+var isMatch = function() {
+	if (cardsInPlay[0] === cardsInPlay[1]) {
+	alert ("You found a match!")
+} else {
+	alert ("Sorry, try again.")
+	}
+}
+
+var isTwoCards = function() {
+	
+	cardsInPlay.push(this.getAttribute('data-card'));
+
+	if (cardsInPlay.length === 2) {
+		
+		isMatch();
+
+		cardsInPlay = [];
+	}
+
+}
